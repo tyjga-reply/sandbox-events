@@ -1,0 +1,12 @@
+{
+    "Entries": [
+      {
+        "EventBusName": "default",
+        "Source": "custom.ec2.simulator",
+        "DetailType": "EC2 Instance State-change Notification",
+        "Resources": [],
+        "Detail": "{\"instance-id\": \"i-00000000000000\", \"state\": \"running\"}"
+      }
+    ]
+  }
+  

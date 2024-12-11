@@ -1,0 +1,17 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Run sendevent.py",
+        "type": "shell",
+        "command": "aws-vault exec sandbox -- /Users/t.kapp/Documents/Sandbox//sandbox-events/.venv/bin/python sendevent.py",
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "problemMatcher": [],
+        "detail": "Runs sendevent.py with aws-vault and venv"
+      }
+    ]
+  }
+  
