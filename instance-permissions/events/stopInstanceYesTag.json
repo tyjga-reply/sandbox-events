@@ -1,10 +1,10 @@
 {
     "version": "0",
-    "id": "99487bae-920b-4fdb-4b24-9d932c9a21dc",
+    "id": "34a91063-1d04-e7e5-593a-b7e4bad51f09",
     "detail-type": "AWS API Call via CloudTrail",
     "source": "aws.ec2",
     "account": "211125361846",
-    "time": "2024-12-17T10:36:57Z",
+    "time": "2024-12-17T12:14:49Z",
     "region": "us-east-1",
     "resources": [],
     "detail": {
@@ -14,7 +14,7 @@
             "principalId": "AROATCKANLS3NIDXYUGTV:t.kapp@reply.de",
             "arn": "arn:aws:sts::211125361846:assumed-role/AWSReservedSSO_AdministratorAccess_d519e2a9ed8243a4/t.kapp@reply.de",
             "accountId": "211125361846",
-            "accessKeyId": "ASIATCKANLS3CRHZXG7X",
+            "accessKeyId": "ASIATCKANLS3I7CEFORI",
             "sessionContext": {
                 "sessionIssuer": {
                     "type": "Role",
@@ -29,7 +29,7 @@
                 }
             }
         },
-        "eventTime": "2024-12-17T10:36:57Z",
+        "eventTime": "2024-12-17T12:14:49Z",
         "eventSource": "ec2.amazonaws.com",
         "eventName": "StopInstances",
         "awsRegion": "us-east-1",
@@ -39,18 +39,18 @@
             "instancesSet": {
                 "items": [
                     {
-                        "instanceId": "i-0988c71975a66d495"
+                        "instanceId": "i-093127c3e6bddd5a6"
                     }
                 ]
             },
             "force": false
         },
         "responseElements": {
-            "requestId": "e1b31bcd-3d51-4a03-80a3-f03727717b10",
+            "requestId": "e597cfad-4cde-4965-93c5-c9e2c43af1af",
             "instancesSet": {
                 "items": [
                     {
-                        "instanceId": "i-0988c71975a66d495",
+                        "instanceId": "i-093127c3e6bddd5a6",
                         "currentState": {
                             "code": 64,
                             "name": "stopping"
@@ -63,8 +63,8 @@
                 ]
             }
         },
-        "requestID": "e1b31bcd-3d51-4a03-80a3-f03727717b10",
-        "eventID": "77c60fe7-04e2-4ee4-bcb9-e0e24476dfcb",
+        "requestID": "e597cfad-4cde-4965-93c5-c9e2c43af1af",
+        "eventID": "7633b462-f95e-4e8e-b42c-449ddb38c76d",
         "readOnly": false,
         "eventType": "AwsApiCall",
         "managementEvent": true,

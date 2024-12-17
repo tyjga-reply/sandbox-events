@@ -5,12 +5,15 @@ import json
 # Constants for paths and function name
 EVENTS_FOLDER = "./events"
 LAMBDA_FUNCTION_NAME = "InstanceDecisionFunction"
+AWS_VAULT_PROFILE = "sandbox"
 
 def run_test(event_file):
     """Run SAM local invoke for a given event file."""
     try:
         # Construct the SAM command
-        command = ["sam", "local", "invoke", LAMBDA_FUNCTION_NAME, "-e", event_file]
+        command = [
+            "aws-vault", "exec", AWS_VAULT_PROFILE, "--", "sam", "local", "invoke", LAMBDA_FUNCTION_NAME, "-e", event_file
+        ]
         result = subprocess.run(command, capture_output=True, text=True)
         
         # Check if the command was successful
