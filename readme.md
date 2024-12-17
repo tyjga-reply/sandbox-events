@@ -1,15 +1,18 @@
-Quick Code to send events on the aws eventbridge
+#Quick Code to send events on the aws eventbridge
 
-Using AWS-Vault:
+#Using AWS-Vault:
 
-CLI:
+#CLI:
 aws-vault exec PROFILE -- python3 sendevent.py
 
 ##############################################################
 
-Personal:
+#Personal:
 aws-vault exec sandbox -- python3 sendevent.py
 
 ##############################################################
-Run Tests like this:
+#Run Tests like this:
+sam build
 sam local invoke InstanceDecisionFunction -e events/runInstance.json
+    ##When Error "app is missing":
+    rm -rf .aws-sam/  

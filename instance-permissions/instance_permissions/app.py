@@ -6,7 +6,7 @@ def lambda_handler(event, context):
         event_name = event.get("detail", {}).get("eventName", "")
 
         # Initialize variables
-        resource_ids = []
+        resource_id = None
         valid = False
 
         # Check if the event name is relevant
@@ -15,43 +15,46 @@ def lambda_handler(event, context):
                 # Navigate to the resource ID in the resourcesSet
                 resource_items = event.get("detail", {}).get("requestParameters", {}).get("resourcesSet", {}).get("items", [])
 
-                # Extract resource IDs
-                resource_ids = [item.get("resourceId") for item in resource_items]
+                # Extract the single resource ID (if any)
+                if resource_items:
+                    resource_id = resource_items[0].get("resourceId")
 
                 # Set validity based on the event name
-                valid = event_name == "CreateTags"
+                valid = event_name == "CreateTags" and resource_id is not None
 
             elif event_name == "RunInstances":
                 # Navigate to the instance ID in the instancesSet
                 instance_items = event.get("detail", {}).get("responseElements", {}).get("instancesSet", {}).get("items", [])
 
-                # Extract instance IDs
-                resource_ids = [item.get("instanceId") for item in instance_items]
+                # Extract the single instance ID (if any)
+                if instance_items:
+                    resource_id = instance_items[0].get("instanceId")
 
-                # RunInstances events are always valid
-                valid = True
+                # RunInstances events are always valid if resource ID exists
+                valid = resource_id is not None
 
             elif event_name in ["StartInstances", "StopInstances"]:
                 # Navigate to the instance ID in the instancesSet
                 instance_items = event.get("detail", {}).get("responseElements", {}).get("instancesSet", {}).get("items", [])
 
-                # Extract instance IDs
-                resource_ids = [item.get("instanceId") for item in instance_items]
+                # Extract the single instance ID (if any)
+                if instance_items:
+                    resource_id = instance_items[0].get("instanceId")
 
-                # StartInstances is valid, StopInstances is not
-                valid = event_name == "StartInstances"
+                # StartInstances is valid, StopInstances is not, only if resource ID exists
+                valid = resource_id is not None and event_name == "StartInstances"
 
-        # Print extracted resource IDs and validity
+        # Print extracted resource ID and validity
         print("Event Name:", event_name)
-        print("Extracted Resource IDs:", resource_ids)
+        print("Extracted Resource ID:", resource_id)
         print("Validity:", valid)
 
         return {
             "statusCode": 200,
             "body": json.dumps({
-                "message": "Resource IDs extracted successfully!",
+                "message": "Resource ID extracted successfully!",
                 "eventName": event_name,
-                "resourceIds": resource_ids,
+                "resourceId": resource_id,
                 "valid": valid
             })
         }
