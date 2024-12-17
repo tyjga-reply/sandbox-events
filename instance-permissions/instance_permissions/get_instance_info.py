@@ -4,7 +4,6 @@ import sys
 
 def get_instance_info(instance_id):
     """Get details about an EC2 instance, including its IP address and tags."""
-    # Create a session using default credentials
     ec2 = boto3.client('ec2')
 
     try:
@@ -21,20 +20,12 @@ def get_instance_info(instance_id):
             'Tags': instance.get('Tags', [])
         }
 
-        return instance_info
+        # Output the instance info as JSON
+        print(json.dumps(instance_info, indent=2))
 
     except Exception as e:
         print(f"Error retrieving instance information: {e}")
-        return None
-
-def save_instance_info(instance_info, file_name):
-    """Save the instance information to a JSON file."""
-    try:
-        with open(file_name, 'w') as f:
-            json.dump(instance_info, f, indent=2)
-        print(f"Instance information saved to {file_name}")
-    except Exception as e:
-        print(f"Error saving instance information to {file_name}: {e}")
+        sys.exit(1)
 
 def main():
     """Main function to handle input and execution flow."""
@@ -44,12 +35,8 @@ def main():
 
     instance_id = sys.argv[1]
     
-    # Fetch instance information
-    instance_info = get_instance_info(instance_id)
-    
-    if instance_info:
-        # Save to a file (or do something else with it)
-        save_instance_info(instance_info, f"{instance_id}_info.json")
+    # Fetch and print instance information
+    get_instance_info(instance_id)
 
 if __name__ == "__main__":
     main()

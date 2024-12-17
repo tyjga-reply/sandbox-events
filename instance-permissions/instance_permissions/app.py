@@ -1,4 +1,50 @@
 import json
+import subprocess
+from datetime import datetime
+
+def get_instance_info(instance_id):
+    """Call the get_instance_info.py script to fetch instance details."""
+    try:
+        # Call the get_instance_info.py script with the instance ID as an argument
+        result = subprocess.run(
+            ['python3', 'get_instance_info.py', instance_id],
+            capture_output=True,
+            text=True
+        )
+
+        if result.returncode == 0:
+            # Parse the output from the script (JSON formatted)
+            instance_info = json.loads(result.stdout)
+            return instance_info
+        else:
+            print(f"Error executing get_instance_info.py: {result.stderr}")
+            return None
+    except Exception as e:
+        print(f"Error retrieving instance information: {e}")
+        return None
+
+def append_to_permission_log(data, log_file='permission_log.json'):
+    """Append data to the permission_log.json file."""
+    try:
+        # Load existing log or initialize an empty list if the file doesn't exist
+        try:
+            with open(log_file, 'r') as f:
+                log_data = json.load(f)
+        except FileNotFoundError:
+            log_data = []
+
+        # Append the new data (with the current timestamp)
+        data['Timestamp'] = datetime.utcnow().isoformat()
+        log_data.append(data)
+
+        # Write the updated data back to the file
+        with open(log_file, 'w') as f:
+            json.dump(log_data, f, indent=2)
+
+        print(f"Instance information appended to {log_file}")
+    
+    except Exception as e:
+        print(f"Error appending to {log_file}: {e}")
 
 def lambda_handler(event, context):
     try:
@@ -49,15 +95,45 @@ def lambda_handler(event, context):
         print("Extracted Resource ID:", resource_id)
         print("Validity:", valid)
 
+        # If valid, fetch instance information and append to the permission log
+        if resource_id:
+            instance_info = get_instance_info(resource_id)
+            if instance_info:
+                # Print the instance IP and Tags
+                print(f"Private IP Address: {instance_info.get('PrivateIpAddress')}")
+                print(f"Public IP Address: {instance_info.get('PublicIpAddress')}")
+                print(f"Tags: {instance_info.get('Tags')}")
+
+                # Append to the log
+                append_to_permission_log(instance_info)
+
+                # Include IP addresses in the return message
+                return_ip_info = {
+                    "PrivateIpAddress": instance_info.get("PrivateIpAddress"),
+                    "PublicIpAddress": instance_info.get("PublicIpAddress")
+                }
+
+                return {
+                    "statusCode": 200,
+                    "body": json.dumps({
+                        "message": "Resource ID extracted successfully and logged!",
+                        "eventName": event_name,
+                        "resourceId": resource_id,
+                        "valid": valid,
+                        "ipInfo": return_ip_info
+                    })
+                }
+
         return {
             "statusCode": 200,
             "body": json.dumps({
-                "message": "Resource ID extracted successfully!",
+                "message": "No valid instance found to log.",
                 "eventName": event_name,
                 "resourceId": resource_id,
                 "valid": valid
             })
         }
+
     except Exception as e:
         print("Error occurred:", e)
         return {
