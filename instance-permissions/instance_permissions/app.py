@@ -10,7 +10,7 @@ def lambda_handler(event, context):
         valid = False
 
         # Check if the event name is relevant
-        if event_name in ["CreateTags", "DeleteTags", "RunInstances"]:
+        if event_name in ["CreateTags", "DeleteTags", "RunInstances", "StartInstances", "StopInstances"]:
             if event_name in ["CreateTags", "DeleteTags"]:
                 # Navigate to the resource ID in the resourcesSet
                 resource_items = event.get("detail", {}).get("requestParameters", {}).get("resourcesSet", {}).get("items", [])
@@ -30,6 +30,16 @@ def lambda_handler(event, context):
 
                 # RunInstances events are always valid
                 valid = True
+
+            elif event_name in ["StartInstances", "StopInstances"]:
+                # Navigate to the instance ID in the instancesSet
+                instance_items = event.get("detail", {}).get("responseElements", {}).get("instancesSet", {}).get("items", [])
+
+                # Extract instance IDs
+                resource_ids = [item.get("instanceId") for item in instance_items]
+
+                # StartInstances is valid, StopInstances is not
+                valid = event_name == "StartInstances"
 
         # Print extracted resource IDs and validity
         print("Event Name:", event_name)
