@@ -1,6 +1,5 @@
 import json
 import subprocess
-from datetime import datetime
 
 def get_instance_info(instance_id):
     """Call the get_instance_info.py script to fetch instance details."""
@@ -22,29 +21,6 @@ def get_instance_info(instance_id):
     except Exception as e:
         print(f"Error retrieving instance information: {e}")
         return None
-
-def append_to_permission_log(data, log_file='permission_log.json'):
-    """Append data to the permission_log.json file."""
-    try:
-        # Load existing log or initialize an empty list if the file doesn't exist
-        try:
-            with open(log_file, 'r') as f:
-                log_data = json.load(f)
-        except FileNotFoundError:
-            log_data = []
-
-        # Append the new data (with the current timestamp)
-        data['Timestamp'] = datetime.utcnow().isoformat()
-        log_data.append(data)
-
-        # Write the updated data back to the file
-        with open(log_file, 'w') as f:
-            json.dump(log_data, f, indent=2)
-
-        print(f"Instance information appended to {log_file}")
-    
-    except Exception as e:
-        print(f"Error appending to {log_file}: {e}")
 
 def lambda_handler(event, context):
     try:
@@ -95,7 +71,7 @@ def lambda_handler(event, context):
         print("Extracted Resource ID:", resource_id)
         print("Validity:", valid)
 
-        # If valid, fetch instance information and append to the permission log
+        # If valid, fetch instance information and return IP info
         if resource_id:
             instance_info = get_instance_info(resource_id)
             if instance_info:
@@ -103,9 +79,6 @@ def lambda_handler(event, context):
                 print(f"Private IP Address: {instance_info.get('PrivateIpAddress')}")
                 print(f"Public IP Address: {instance_info.get('PublicIpAddress')}")
                 print(f"Tags: {instance_info.get('Tags')}")
-
-                # Append to the log
-                append_to_permission_log(instance_info)
 
                 # Include IP addresses in the return message
                 return_ip_info = {
@@ -116,7 +89,7 @@ def lambda_handler(event, context):
                 return {
                     "statusCode": 200,
                     "body": json.dumps({
-                        "message": "Resource ID extracted successfully and logged!",
+                        "message": "Resource ID extracted successfully!",
                         "eventName": event_name,
                         "resourceId": resource_id,
                         "valid": valid,
@@ -127,7 +100,7 @@ def lambda_handler(event, context):
         return {
             "statusCode": 200,
             "body": json.dumps({
-                "message": "No valid instance found to log.",
+                "message": "No valid instance found.",
                 "eventName": event_name,
                 "resourceId": resource_id,
                 "valid": valid
