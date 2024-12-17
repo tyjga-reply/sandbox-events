@@ -1,0 +1,79 @@
+{
+    "version": "0",
+    "id": "b7942482-fb81-e9f3-8371-52f84a96883a",
+    "detail-type": "AWS API Call via CloudTrail",
+    "source": "aws.ec2",
+    "account": "211125361846",
+    "time": "2024-12-17T11:13:14Z",
+    "region": "us-east-1",
+    "resources": [],
+    "detail": {
+        "eventVersion": "1.10",
+        "userIdentity": {
+            "type": "AssumedRole",
+            "principalId": "AROATCKANLS3NIDXYUGTV:t.kapp@reply.de",
+            "arn": "arn:aws:sts::211125361846:assumed-role/AWSReservedSSO_AdministratorAccess_d519e2a9ed8243a4/t.kapp@reply.de",
+            "accountId": "211125361846",
+            "accessKeyId": "ASIATCKANLS3JW2WSF6Z",
+            "sessionContext": {
+                "sessionIssuer": {
+                    "type": "Role",
+                    "principalId": "AROATCKANLS3NIDXYUGTV",
+                    "arn": "arn:aws:iam::211125361846:role/aws-reserved/sso.amazonaws.com/eu-central-1/AWSReservedSSO_AdministratorAccess_d519e2a9ed8243a4",
+                    "accountId": "211125361846",
+                    "userName": "AWSReservedSSO_AdministratorAccess_d519e2a9ed8243a4"
+                },
+                "attributes": {
+                    "creationDate": "2024-12-17T08:29:50Z",
+                    "mfaAuthenticated": "false"
+                }
+            }
+        },
+        "eventTime": "2024-12-17T11:13:14Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "StartInstances",
+        "awsRegion": "us-east-1",
+        "sourceIPAddress": "91.102.9.132",
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.1.1 Safari/605.1.15",
+        "requestParameters": {
+            "instancesSet": {
+                "items": [
+                    {
+                        "instanceId": "i-003492c2f4628ec51"
+                    }
+                ]
+            }
+        },
+        "responseElements": {
+            "requestId": "8b770401-bea6-43e6-81aa-99254add5010",
+            "instancesSet": {
+                "items": [
+                    {
+                        "instanceId": "i-003492c2f4628ec51",
+                        "currentState": {
+                            "code": 0,
+                            "name": "pending"
+                        },
+                        "previousState": {
+                            "code": 80,
+                            "name": "stopped"
+                        }
+                    }
+                ]
+            }
+        },
+        "requestID": "8b770401-bea6-43e6-81aa-99254add5010",
+        "eventID": "fe64da59-e970-43d5-9ddd-24c6b5ed3157",
+        "readOnly": false,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "211125361846",
+        "eventCategory": "Management",
+        "tlsDetails": {
+            "tlsVersion": "TLSv1.3",
+            "cipherSuite": "TLS_AES_128_GCM_SHA256",
+            "clientProvidedHostHeader": "ec2.us-east-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+    }
+}

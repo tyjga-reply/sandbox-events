@@ -1,0 +1,1 @@
+{"statusCode": 200, "body": "{\"message\": \"Resource ID extracted successfully!\", \"eventName\": \"StopInstances\", \"resourceId\": \"i-0988c71975a66d495\", \"valid\": false, \"ipInfo\": {\"PrivateIpAddress\": \"172.31.89.183\", \"PublicIpAddress\": \"N/A\"}}"}

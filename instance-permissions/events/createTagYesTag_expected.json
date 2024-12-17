@@ -1,0 +1,1 @@
+{"statusCode": 200, "body": "{\"message\": \"Resource ID extracted successfully!\", \"eventName\": \"CreateTags\", \"resourceId\": \"i-093127c3e6bddd5a6\", \"valid\": true, \"ipInfo\": {\"PrivateIpAddress\": \"172.31.88.70\", \"PublicIpAddress\": \"N/A\"}}"}

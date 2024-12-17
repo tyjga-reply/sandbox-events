@@ -1,4 +1,0 @@
-{
-    "statusCode": 200,
-    "body": "{\"message\": \"Resource ID extracted successfully!\", \"eventName\": \"RunInstances\", \"resourceId\": \"i-0bf2968885c987c7e\", \"valid\": true}"
-  }

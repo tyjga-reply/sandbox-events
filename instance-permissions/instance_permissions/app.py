@@ -1,6 +1,10 @@
 import json
 import subprocess
 
+# Define the tag key and value as constants
+TAG_KEY = "permission"
+TAG_VALUE = "yes"
+
 def get_instance_info(instance_id):
     """Call the get_instance_info.py script to fetch instance details."""
     try:
@@ -41,9 +45,6 @@ def lambda_handler(event, context):
                 if resource_items:
                     resource_id = resource_items[0].get("resourceId")
 
-                # Set validity based on the event name
-                valid = event_name == "CreateTags" and resource_id is not None
-
             elif event_name == "RunInstances":
                 # Navigate to the instance ID in the instancesSet
                 instance_items = event.get("detail", {}).get("responseElements", {}).get("instancesSet", {}).get("items", [])
@@ -51,9 +52,6 @@ def lambda_handler(event, context):
                 # Extract the single instance ID (if any)
                 if instance_items:
                     resource_id = instance_items[0].get("instanceId")
-
-                # RunInstances events are always valid if resource ID exists
-                valid = resource_id is not None
 
             elif event_name in ["StartInstances", "StopInstances"]:
                 # Navigate to the instance ID in the instancesSet
@@ -63,15 +61,11 @@ def lambda_handler(event, context):
                 if instance_items:
                     resource_id = instance_items[0].get("instanceId")
 
-                # StartInstances is valid, StopInstances is not, only if resource ID exists
-                valid = resource_id is not None and event_name == "StartInstances"
-
         # Print extracted resource ID and validity
         print("Event Name:", event_name)
         print("Extracted Resource ID:", resource_id)
-        print("Validity:", valid)
 
-        # If valid, fetch instance information and return IP info
+        # If resource_id exists
         if resource_id:
             instance_info = get_instance_info(resource_id)
             if instance_info:
@@ -79,6 +73,16 @@ def lambda_handler(event, context):
                 print(f"Private IP Address: {instance_info.get('PrivateIpAddress')}")
                 print(f"Public IP Address: {instance_info.get('PublicIpAddress')}")
                 print(f"Tags: {instance_info.get('Tags')}")
+
+                # Check if the tag key and value match
+                tags = instance_info.get("Tags", [])
+                tag_found = any(tag.get("Key") == TAG_KEY and tag.get("Value") == TAG_VALUE for tag in tags)
+
+                # If the tag is not found, set valid to False
+                if not tag_found:
+                    valid = False
+                elif tag_found:
+                    valid = True
 
                 # Include IP addresses in the return message
                 return_ip_info = {

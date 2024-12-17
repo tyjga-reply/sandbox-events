@@ -1,10 +1,10 @@
 {
     "version": "0",
-    "id": "fbbe254c-de4b-6346-8438-b76786520b08",
+    "id": "6d998a2d-e102-6937-9aa1-1264d42ea726",
     "detail-type": "AWS API Call via CloudTrail",
     "source": "aws.ec2",
     "account": "211125361846",
-    "time": "2024-12-16T08:55:25Z",
+    "time": "2024-12-17T11:12:32Z",
     "region": "us-east-1",
     "resources": [],
     "detail": {
@@ -14,7 +14,7 @@
             "principalId": "AROATCKANLS3NIDXYUGTV:t.kapp@reply.de",
             "arn": "arn:aws:sts::211125361846:assumed-role/AWSReservedSSO_AdministratorAccess_d519e2a9ed8243a4/t.kapp@reply.de",
             "accountId": "211125361846",
-            "accessKeyId": "ASIATCKANLS3MGBKRCZS",
+            "accessKeyId": "ASIATCKANLS3JW2WSF6Z",
             "sessionContext": {
                 "sessionIssuer": {
                     "type": "Role",
@@ -24,14 +24,14 @@
                     "userName": "AWSReservedSSO_AdministratorAccess_d519e2a9ed8243a4"
                 },
                 "attributes": {
-                    "creationDate": "2024-12-16T08:41:38Z",
+                    "creationDate": "2024-12-17T08:29:50Z",
                     "mfaAuthenticated": "false"
                 }
             }
         },
-        "eventTime": "2024-12-16T08:55:25Z",
+        "eventTime": "2024-12-17T11:12:32Z",
         "eventSource": "ec2.amazonaws.com",
-        "eventName": "StartInstances",
+        "eventName": "StopInstances",
         "awsRegion": "us-east-1",
         "sourceIPAddress": "91.102.9.132",
         "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.1.1 Safari/605.1.15",
@@ -39,31 +39,32 @@
             "instancesSet": {
                 "items": [
                     {
-                        "instanceId": "i-06dd978c1574e2359"
+                        "instanceId": "i-003492c2f4628ec51"
                     }
                 ]
-            }
+            },
+            "force": false
         },
         "responseElements": {
-            "requestId": "c94d83a7-4f46-45d7-bc2b-f877f13c1669",
+            "requestId": "1fa15d0a-a680-41e7-954e-8071aedeac0a",
             "instancesSet": {
                 "items": [
                     {
-                        "instanceId": "i-06dd978c1574e2359",
+                        "instanceId": "i-003492c2f4628ec51",
                         "currentState": {
-                            "code": 0,
-                            "name": "pending"
+                            "code": 64,
+                            "name": "stopping"
                         },
                         "previousState": {
-                            "code": 80,
-                            "name": "stopped"
+                            "code": 16,
+                            "name": "running"
                         }
                     }
                 ]
             }
         },
-        "requestID": "c94d83a7-4f46-45d7-bc2b-f877f13c1669",
-        "eventID": "302b3213-5007-489e-9aa8-6b0ee2c0304c",
+        "requestID": "1fa15d0a-a680-41e7-954e-8071aedeac0a",
+        "eventID": "50539b46-e23b-4138-b7fa-dceb6ef592dc",
         "readOnly": false,
         "eventType": "AwsApiCall",
         "managementEvent": true,
