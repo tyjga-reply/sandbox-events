@@ -55,10 +55,21 @@ def run_all_tests():
         print(f"Error: Events folder not found at {EVENTS_FOLDER}")
         return
 
-    event_files = [os.path.join(EVENTS_FOLDER, f) for f in os.listdir(EVENTS_FOLDER) if f.endswith(".json") and not f.endswith("_expected.json")]
+    # Traverse both WithTag and WithoutTag subfolders to find event files
+    event_files = []
+    for subfolder in ["WithTag", "WithoutTag"]:
+        subfolder_path = os.path.join(EVENTS_FOLDER, subfolder)
+        if os.path.exists(subfolder_path):
+            event_files += [os.path.join(subfolder_path, f) for f in os.listdir(subfolder_path) if f.endswith(".json") and not f.endswith("_expected.json")]
+
+    if not event_files:
+        print("No event files found in WithTag or WithoutTag subfolders.")
+        return
+
     passed_tests = 0
     total_tests = 0
 
+    # Run tests for each event file
     for event_file in event_files:
         print(f"Running test for {event_file}...")
         response = run_test(event_file)
