@@ -3,28 +3,26 @@ Transform: AWS::Serverless-2016-10-31
 Description: >
   instance-permissions
 
-  Sample SAM Template for instance-permissions
+  SAM Template for instance-permissions Lambda function to retrieve EC2 instance details.
 
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
     Timeout: 30
-
-    # You can add LoggingConfig parameters such as the Logformat, Log Group, and SystemLogLevel or ApplicationLogLevel. Learn more here https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-function.html#sam-function-loggingconfig.
     LoggingConfig:
       LogFormat: JSON
+
 Resources:
   InstanceDecisionFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function
     Properties:
-      CodeUri: instance_permissions/
-      Handler: app.lambda_handler
-      Runtime: python3.13
+      CodeUri: instance_permissions/  # Path to the folder with your code
+      Handler: app.lambda_handler     # Update to match the entry point in your Python file
+      Runtime: python3.13             # Ensure the runtime is correct for your code
       Architectures:
-      - x86_64
-      Events:
-        HelloWorld:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /hello
-            Method: get
+        - x86_64
+      Policies:
+        - Statement:
+            Effect: Allow
+            Action:
+              - ec2:DescribeInstances
+            Resource: '*'             # Allow describing all instances (limit scope if possible)
