@@ -1,1 +1,4 @@
-{"statusCode": 200, "body": "{\"message\": \"Resource ID extracted successfully!\", \"eventName\": \"CreateTags\", \"resourceId\": \"i-003492c2f4628ec51\", \"valid\": false, \"ipInfo\": {\"PrivateIpAddress\": \"172.31.25.223\", \"PublicIpAddress\": \"N/A\"}}"}
+{
+    "statusCode": 200,
+    "body": "{\"message\": \"Resource ID extracted successfully!\", \"eventName\": \"CreateTags\", \"resourceId\": \"i-003492c2f4628ec51\", \"valid\": false, \"ipInfo\": {\"PrivateIpAddress\": \"172.31.25.223\"}}"
+  }
