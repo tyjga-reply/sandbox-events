@@ -5,16 +5,22 @@ import json
 # Constants for paths and function name
 EVENTS_FOLDER = "./events"
 LAMBDA_FUNCTION_NAME = "InstanceDecisionFunction"
-AWS_VAULT_PROFILE = "sandbox"
 
 def run_test(event_file):
     """Run SAM local invoke for a given event file."""
     try:
         # Construct the SAM command
         command = [
-            "aws-vault", "exec", AWS_VAULT_PROFILE, "--", "sam", "local", "invoke", LAMBDA_FUNCTION_NAME, "-e", event_file
+            "sam", "local", "invoke", LAMBDA_FUNCTION_NAME, "-e", event_file
         ]
-        result = subprocess.run(command, capture_output=True, text=True)
+        
+        # Pass AWS credentials from the environment
+        env = os.environ.copy()
+        if not env.get("AWS_ACCESS_KEY_ID") or not env.get("AWS_SECRET_ACCESS_KEY"):
+            print("Error: AWS credentials are not set in the environment.")
+            return None
+        
+        result = subprocess.run(command, capture_output=True, text=True, env=env)
         
         # Check if the command was successful
         if result.returncode != 0:

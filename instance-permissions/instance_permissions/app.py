@@ -58,7 +58,6 @@ def lambda_handler(event, context):
             instance_info = get_instance_info(resource_id)
             if instance_info:
                 print(f"Private IP Address: {instance_info.get('PrivateIpAddress')}")
-                print(f"Public IP Address: {instance_info.get('PublicIpAddress')}")
                 print(f"Tags: {instance_info.get('Tags')}")
 
                 # Check if the tag key and value match
@@ -73,8 +72,7 @@ def lambda_handler(event, context):
 
                 # Include IP addresses in the return message
                 return_ip_info = {
-                    "PrivateIpAddress": instance_info.get("PrivateIpAddress"),
-                    "PublicIpAddress": instance_info.get("PublicIpAddress")
+                    "PrivateIpAddress": instance_info.get("PrivateIpAddress")
                 }
 
                 return {

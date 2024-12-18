@@ -16,7 +16,6 @@ def get_instance_info(instance_id):
             'InstanceId': instance['InstanceId'],
             'InstanceType': instance.get('InstanceType', 'N/A'),
             'PrivateIpAddress': instance.get('PrivateIpAddress', 'N/A'),
-            'PublicIpAddress': instance.get('PublicIpAddress', 'N/A'),
             'Tags': instance.get('Tags', [])
         }
 
